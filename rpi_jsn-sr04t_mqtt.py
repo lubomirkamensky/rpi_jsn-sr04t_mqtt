@@ -120,6 +120,8 @@ try:
 
             distance = pulse_duration * 17150           #Calculate distance
             distance = round(distance, 2)               #Round to two decimal points
+            
+            print("reading.append")
 
             if distance > 25 and distance < 450:        #Is distance within range
                 print("Distance:",distance - CALIBRATION,"cm")  #Distance with calibration
