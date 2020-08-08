@@ -53,7 +53,7 @@ config.read(args.configuration)
 
 TRIG = int(config['GpioPins']['trig'])
 ECHO = int(config['GpioPins']['echo'])
-CALIBRATION =config['Calibration']['calibration']
+CALIBRATION = float(config['Calibration']['calibration'])
 
 class Element:
     def __init__(self,row):
