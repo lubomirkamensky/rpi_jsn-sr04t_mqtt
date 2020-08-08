@@ -52,8 +52,8 @@ lastValue = {}
 config = configparser.ConfigParser()
 config.read(args.configuration)
 
-TRIG = int(config['GPIO-pins']['trig'])
-ECHO = int(config['GPIO-pins']['echo'])
+TRIG = int(config['GpioPins']['trig'])
+ECHO = int(config['GpioPins']['echo'])
 CALIBRATION = Decimal(config['Calibration']['calibration'])
 
 class Element:
