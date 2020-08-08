@@ -19,7 +19,6 @@ import sys
 import configparser
 import RPi.GPIO as GPIO 
 import time
-from decimal import Decimal
 import statistics
 
 
@@ -54,7 +53,7 @@ config.read(args.configuration)
 
 TRIG = int(config['GpioPins']['trig'])
 ECHO = int(config['GpioPins']['echo'])
-CALIBRATION = Decimal(config['Calibration']['calibration'])
+CALIBRATION =config['Calibration']['calibration']
 
 class Element:
     def __init__(self,row):
@@ -121,7 +120,6 @@ try:
             distance = pulse_duration * 17150           #Calculate distance
             distance = round(distance, 2)               #Round to two decimal points
             
-            print("reading.append")
 
             if distance > 25 and distance < 450:        #Is distance within range
                 print("Distance:",distance - CALIBRATION,"cm")  #Distance with calibration
