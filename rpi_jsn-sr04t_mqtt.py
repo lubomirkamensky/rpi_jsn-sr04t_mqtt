@@ -32,7 +32,7 @@ parser.add_argument('--mqtt-port', default='1883', type=int, help='MQTT server p
                     Defaults to 1883')
 parser.add_argument('--mqtt-topic', default='gardenopenhub', help='Topic prefix to be used for \
                     subscribing/publishing. Defaults to "gardenopenhub/"')
-parser.add_argument('--configuration', help='Sensor configuration file. Required!')
+parser.add_argument('--configuration', default='rpi', help='Sensor configuration file. Defaults to "rpi"')
 parser.add_argument('--frequency', default='60', help='How often is the source \
                     checked for the changes, in seconds. Only integers. Defaults to 60')
 parser.add_argument('--only-changes', default='False', help='When set to True then \
@@ -84,7 +84,7 @@ try:
     while True:
         close_time=time.time()+frequency
         reading=[]
-        
+
         while True:
             if time.time()>close_time:
                 data = []
