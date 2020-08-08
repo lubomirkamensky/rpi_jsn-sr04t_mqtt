@@ -66,7 +66,7 @@ class Element:
                 lastValue[self.topic] = self.value
                 fulltopic=topic+self.topic
                 logging.info("Publishing " + fulltopic)
-                mqc.publish(fulltopic,reMap(self.value),qos=0,retain=False)
+                mqc.publish(fulltopic,self.value,qos=0,retain=False)
 
         except Exception as exc:
             logging.error("Error reading "+self.topic+": %s", exc)
