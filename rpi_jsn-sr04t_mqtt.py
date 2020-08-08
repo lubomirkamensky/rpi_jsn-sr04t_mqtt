@@ -122,8 +122,8 @@ try:
             
 
             if distance > 25 and distance < 450:        #Is distance within range
-                print("Distance:",distance - CALIBRATION,"cm")  #Distance with calibration
-                reading.append(distance - CALIBRATION)
+                print("Distance:",round(distance - CALIBRATION,2),"cm")  #Distance with calibration
+                reading.append(round(distance - CALIBRATION,2))
             else:
                 print("Out Of Range")                   #display out of range
 
