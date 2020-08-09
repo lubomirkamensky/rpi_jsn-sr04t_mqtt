@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 #encoding:utf-8
 
-
 # Simple MQTT publishing from Ultrasonic distance sensor jsn-sr04t on RPI
 #
 # Written and (C) 2020 by Lubomir Kamensky <lubomir.kamensky@gmail.com>
@@ -10,7 +9,6 @@
 # Requires:
 # - Eclipse Paho for Python - http://www.eclipse.org/paho/clients/python/
 
-import argparse
 import logging
 import logging.handlers
 import time
@@ -23,37 +21,23 @@ import statistics
 
 
 GPIO.setmode(GPIO.BCM)                                 #Set GPIO pin numbering 
-    
-parser = argparse.ArgumentParser(description='Bridge between Ultrasonic distance sensor jsn-sr04t and MQTT')
-parser.add_argument('--mqtt-host', default='localhost', help='MQTT server address. \
-                     Defaults to "localhost"')
-parser.add_argument('--mqtt-port', default='1883', type=int, help='MQTT server port. \
-                    Defaults to 1883')
-parser.add_argument('--mqtt-topic', default='gardenopenhub', help='Topic prefix to be used for \
-                    subscribing/publishing. Defaults to "gardenopenhub/"')
-parser.add_argument('--configuration', default='/home/pi/rpi_jsn-sr04t_mqtt/rpi.ini', help='Sensor configuration file. Defaults to "rpi"')
-parser.add_argument('--frequency', default='60', help='How often is the source \
-                    checked for the changes, in seconds. Only integers. Defaults to 60')
-parser.add_argument('--only-changes', default='False', help='When set to True then \
-                    only changed values are published')
-
-args=parser.parse_args()
+config = configparser.ConfigParser()
+config.read("./rpi.ini")
 
 logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
-topic=args.mqtt_topic
+topic=config['MQTT']['topic']
 if not topic.endswith("/"):
     topic+="/"
-frequency=int(args.frequency)
+frequency=int(config['MQTT']['frequency'])
 
 lastValue = {}
-
-config = configparser.ConfigParser()
-config.read(args.configuration)
 
 TRIG = int(config['GpioPins']['trig'])
 ECHO = int(config['GpioPins']['echo'])
 CALIBRATION = float(config['Calibration']['calibration'])
+
+config['MQTT']['host']
 
 class Element:
     def __init__(self,row):
@@ -62,7 +46,7 @@ class Element:
 
     def publish(self):
         try:
-            if self.value!=lastValue.get(self.topic,0) or args.only_changes == 'False':
+            if self.value!=lastValue.get(self.topic,0) or config['MQTT']['onlychanges'] == 'False':
                 lastValue[self.topic] = self.value
                 fulltopic=topic+self.topic
                 logging.info("Publishing " + fulltopic)
@@ -73,7 +57,7 @@ class Element:
 
 try:
     mqc=mqtt.Client()
-    mqc.connect(args.mqtt_host,args.mqtt_port,10)
+    mqc.connect(config['MQTT']['host'],config['MQTT']['port'],10)
     mqc.loop_start()
 
     print("Distance measurement in progress")
