@@ -9,6 +9,7 @@
 # Requires:
 # - Eclipse Paho for Python - http://www.eclipse.org/paho/clients/python/
 
+import os
 import logging
 import logging.handlers
 import time
@@ -22,7 +23,7 @@ import statistics
 
 GPIO.setmode(GPIO.BCM)                                 #Set GPIO pin numbering 
 config = configparser.ConfigParser()
-config.read("./rpi.ini")
+config.read(os.path.join(sys.path[0], "rpi.ini"))
 
 logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
