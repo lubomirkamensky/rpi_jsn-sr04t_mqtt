@@ -19,10 +19,15 @@ import configparser
 import RPi.GPIO as GPIO 
 import time
 import statistics
+import argparse
+
+parser = argparse.ArgumentParser(description='Simple MQTT publishing from Ultrasonic distance sensor jsn-sr04t on RPI')
+parser.add_argument('--configuration', help='Configuration file. Required!')
+args=parser.parse_args()
 
 GPIO.setmode(GPIO.BCM)                                 #Set GPIO pin numbering 
 config = configparser.ConfigParser()
-config.read(os.path.join(sys.path[0], "rpi.ini"))
+config.read(os.path.join(sys.path[0], args.configuration))
 
 logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
