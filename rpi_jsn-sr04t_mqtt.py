@@ -42,8 +42,6 @@ TRIG = int(config['GpioPins']['trig'])
 ECHO = int(config['GpioPins']['echo'])
 CALIBRATION = float(config['Calibration']['calibration'])
 
-config['MQTT']['host']
-
 class Element:
     def __init__(self,row):
         self.topic=row[0]

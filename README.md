@@ -7,7 +7,7 @@ Dependencies
 
 Example use
 -----------
-python3 rpi_jsn-sr04t_mqtt.py
+python3 rpi_jsn-sr04t_mqtt.py --configuration studna.ini
 
 Example use pm2 usage
 ---------------------
